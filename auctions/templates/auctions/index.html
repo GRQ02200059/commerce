@@ -1,0 +1,69 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <h2>{{title}}</h2>
+
+   <ul>
+        {% for entry in lists %}
+{#            <div  class="box"  onclick="window.open('{% url "detail" entry.name %}')"#}
+{#                  style="#}
+{#                          height:200px;#}
+{##}
+  {#box-shadow: 8px 8px 5px #444;#}
+{#  background-image: linear-gradient( #fff, #ddd 40%, #ccc);">#}
+{#                <img src={{entry.image_url }} style="object-fit:cover;"  >#}
+{#               <div  style="left: 50%;position: absolute"> {{ entry.name }}</div>#}
+{#                <br>#}
+{#               <p style="left: 50%;position: absolute"> {{ entry.desc }}</p>#}
+{#            </div>#}
+     <div class="container-fluid">
+
+
+
+
+
+	<div class="row"  onclick="
+       window.open('{% url "detail" entry.name %}');
+
+           $.ajax({
+               url: '{% url 'detail' entry.name %}',
+               type: 'POST',
+               data: {user:'{{user.username}}'},
+               success: function (arg) {
+
+               }
+           });" style="border:1px solid #060606" >
+        <script>
+   function watchilist() {
+
+
+
+
+       }
+
+
+
+
+
+       </script>
+		<div class="col-md-4">
+			<img width="200" height="200" src={{entry.image_url }}  />
+		</div>
+		<div class="col-md-8">
+			<h4>
+				{{ entry.name }}
+			</h4>
+			<h4>
+				Price:{{ entry.price }}
+			</h4>
+            <p>
+                {{ entry.desc }}
+            </p>
+		</div>
+	</div>
+</div>
+            <br>
+        {% endfor %}
+    </ul>
+{% endblock %}

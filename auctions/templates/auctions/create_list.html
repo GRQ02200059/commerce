@@ -1,0 +1,65 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Create Listing</h2>
+    <form  method='post' action="{% url 'after_create' %}" >
+
+   <div class="input-group">
+  <input type="text" name="title" class="form-control" placeholder="商品名称" aria-describedby="basic-addon1">
+</div>
+<br>
+<div class="input-group">
+  <input type="text" name="descr" class="form-control" placeholder="详细描述" aria-describedby="basic-addon2">
+</div>
+<br>
+<div class="input-group">
+  <input type="text" name="s_bid" class="form-control" placeholder="起拍价格" >
+</div>
+<br>
+<div class="input-group">
+  <input type="text" name="image_url" class="form-control" placeholder="图片链接" id="basic-url" aria-describedby="basic-addon3">
+</div>
+        <input   type="hidden" value="{{ user.username }}" name="user" >
+        <br>
+<tr>
+      <td align="center">类别：</td>
+    <br>
+
+
+        <select name="xueli" class="form-control">                     <!--下拉列表-->
+          <option value="学习用品" selected="selected">学习用品</option>
+          <option value="学习用品">学习用品</option>
+          <option value="衣服首饰">衣服首饰</option>
+          <option value="硬币邮票">硬币邮票</option>
+          <option value="数码产品">数码产品</option>
+            <option value="生活家具">生活家具</option>
+            <option value="生活家具">其他</option>
+        </select>
+
+
+    </tr>
+
+        <br>
+        <br>
+        <div>
+    <input type="submit" value="submit" class="btn btn-primary btn-cube">
+      </div>
+    </form>
+{#    <form method="post" action="{% url 'after_create' %}">#}
+{##}
+{#          <input type="text" name="entry" size="40"  placeholder="条目名称">#}
+{#          <input type="text" name="context" size="100" placeholder="内容">#}
+{#            title:<input type="text" name="title" ><br>#}
+{#    description:<input type="text" name="descr"><br>#}
+{#    starting bid:<input type="text" name="s_bid"><br>#}
+{#    category:<input type="text" name="category"><br>#}
+{#    image url:<input type="text" name="image_url">#}
+{##}
+{##}
+{#    <br>#}
+
+{#<input id="btnSubmit" class="btn btn-primary btn-cube"#}
+{#                            type="submit" value="保 存"  />#}
+{##}
+{#</form>#}
+{% endblock %}

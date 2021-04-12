@@ -1,0 +1,134 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+     {% if state == 'close' and owner == 'null' %}
+        <h3>商品流拍</h3>
+     {% elif state == 'close' and owner != "null" %}
+          <h3>商品已售出，由{{ owner }}拍得</h3>
+         {% else %}
+
+         <div class="container">
+        <div ><h2>{{ list.name }}{{ clo }}</h2></div>
+   <script>
+   function watchilist() {
+
+
+
+       }
+
+
+
+
+
+       </script>
+{% if user.is_authenticated %}
+        <div><button id="bt" type="button" style="background-color: {{ col }}" onclick=" if(document.querySelector('#bt').style.backgroundColor === 'blue') {
+           document.querySelector('#bt').style.backgroundColor = 'white';
+           alert('取消收藏');
+           $.ajax({
+               url: '{% url 'wl' %}',
+               type: 'POST',
+               data: {user:'{{user.username}}', name:'{{list.name}}', action: 'cancel'},
+               success: function (arg) {
+
+               }
+           })
+       }
+       else
+           {
+               alert('收藏到watchlist');
+
+               document.querySelector('#bt').style.backgroundColor = 'blue';
+               $.ajax({
+                   url: '{% url 'wl' %}',
+                   type: 'POST',
+                   data: {user:'{{user.username}}', name:'{{list.name}}', action: 'add'},
+
+
+               })
+           }" >Watchlist</button></div>
+        <br>
+{% endif %}
+   {% ifequal user.username list.user  %}
+        <div><button id="close" type="button" style="background-color: crimson" onclick="alert('关闭拍卖');
+ $.ajax({
+                   url: '{% url 'close' %}',
+                   type: 'POST',
+                   data: {'state':'close','entry':'{{ list.name }}'}
+
+
+               })
+
+
+
+">结束拍卖</button></div>
+       <br>
+   {% else %}
+
+   {% endifequal %}
+
+
+        <br>
+        <div><img src={{list.image_url}}   ></div>
+        {{ list.desc }}
+        <br>
+        <div><h3>目前价格：{{ bids }}</h3></div>
+
+         {% if user.is_authenticated %}
+       <p> {{ nums  }}bid(s) so far,Your bid is the current bid</p>
+   <form action={% url 'bids' %} method="post"   name="myform">
+                <input   type="number" size="100" name="bid" id="the_bid" placeholder="最少{{ bids }}">
+       <script>
+           function checkForm() {
+               var bid=myform.the_bid.value;
+               if(bid<={{ bids }})
+               {
+                   alert('出价不符合标准：你的出价必须高于上述标价');
+
+                   return false;
+               }
+               else
+               {
+                   return  true;
+               }
+
+
+
+           }
+
+       </script>
+                <input   type="hidden" value="{{ list.name }}"name="name" >
+                <input   type="hidden" value="{{ user.username }}"name="user" >
+
+               <input type="submit" value="bid" class="btn btn-primary btn-cube" onclick="return checkForm()" >
+            </form>
+
+          <div> <h3>Details</h3>
+           <li>listed by:{{ list.user }}</li>
+           <li>Category:{{ list.category }}</li>
+          </div>
+
+
+
+        <div>
+            <h3>Comments</h3>
+            {%for comment in comments  %}
+            <li>{{ comment}}</li>
+            {% endfor %}
+
+
+
+            <form action={% url 'comments' %} method="post">
+                <input   type="text" size="100" name="comment">
+                <input   type="hidden" value="{{ list.name }}"name="name" >
+               <input type="submit" value="add comments" class="btn btn-primary btn-cube">
+            </form>
+        </div>
+
+
+   </div>
+    {% endif %}
+{% endif %}
+
+
+{% endblock %}
